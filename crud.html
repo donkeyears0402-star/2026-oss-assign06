@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>영화 감상 기록</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>영화 감상 기록</h1>
+  <p id="message"></p>
+
+  <form id="movieForm">
+    <p>
+      <label for="title">제목</label>
+      <input type="text" id="title">
+    </p>
+    <p>
+      <label for="director">감독</label>
+      <input type="text" id="director">
+    </p>
+    <p>
+      <label for="genre">장르</label>
+      <select id="genre">
+        <option value="">선택하세요</option>
+        <option value="액션">액션</option>
+        <option value="드라마">드라마</option>
+        <option value="코미디">코미디</option>
+        <option value="SF">SF</option>
+        <option value="애니메이션">애니메이션</option>
+      </select>
+    </p>
+    <p>
+      <label for="year">개봉연도</label>
+      <input type="number" id="year">
+    </p>
+    <p>
+      <label for="rating">평점(1~5)</label>
+      <input type="number" id="rating">
+    </p>
+    <button type="submit" id="saveBtn">저장</button>
+  </form>
+
+  <div class="search-box">
+    <label for="keyword">검색</label>
+    <input type="text" id="keyword" placeholder="제목 또는 감독">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>제목</th>
+        <th>감독</th>
+        <th>장르</th>
+        <th>개봉연도</th>
+        <th>평점</th>
+        <th>관리</th>
+      </tr>
+    </thead>
+    <tbody id="movieList"></tbody>
+  </table>
+
+  <a href="index.html">메인으로</a>
+
+  <script src="app.js"></script>
+</body>
+</html>
