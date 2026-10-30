@@ -164,6 +164,19 @@ async function addMovie(data) {
   await response.json();
 }
 
+// 수정 중인 영화를 서버에 반영 (PUT)
+async function updateMovie(data) {
+  const response = await fetch(API_URL + "/" + editId, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    throw new Error("수정에 실패했습니다. (" + response.status + ")");
+  }
+  await response.json();
+}
+
 function resetForm() {
   editId = null;
   document.getElementById("movieForm").reset();
@@ -182,15 +195,16 @@ window.onload = function () {
       return;
     }
 
-    if (editId !== null) {
-      return;
-    }
-
     try {
-      await addMovie(data);
+      if (editId === null) {
+        await addMovie(data);
+        showMessage("영화를 추가했습니다.", false);
+      } else {
+        await updateMovie(data);
+        showMessage("영화를 수정했습니다.", false);
+      }
       resetForm();
       await loadMovies();
-      showMessage("영화를 추가했습니다.", false);
     } catch (error) {
       showMessage(error.message, true);
     }
