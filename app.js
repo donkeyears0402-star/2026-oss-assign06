@@ -1,6 +1,25 @@
+// 공개 MockAPI. 비밀 키는 없다.
+const API_URL = "https://6ae6da4556b2ee1e543feb38.mockapi.io/api/v1/movies";
+
 // 화면에 그릴 영화 목록. 저장은 서버에서 한다.
 let movies = [];
 let editId = null; // 수정 중인 id. null이면 추가
+
+function showMessage(text, isError) {
+  const el = document.getElementById("message");
+  el.innerText = text;
+  el.className = isError ? "error" : "ok";
+}
+
+// 시작 시, 추가/수정/삭제 후에 서버 목록을 다시 가져온다
+async function loadMovies() {
+  const response = await fetch(API_URL);
+  if (!response.ok) {
+    throw new Error("목록을 가져오지 못했습니다. (" + response.status + ")");
+  }
+  movies = await response.json();
+  render(movies);
+}
 
 // 배열을 테이블에 출력
 function render(list) {
@@ -139,7 +158,9 @@ function resetForm() {
 }
 
 window.onload = function () {
-  render(movies);
+  loadMovies().catch(function (error) {
+    showMessage(error.message, true);
+  });
 
   document.getElementById("movieForm").addEventListener("submit", function (event) {
     event.preventDefault();
