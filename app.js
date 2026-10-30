@@ -18,7 +18,21 @@ async function loadMovies() {
     throw new Error("목록을 가져오지 못했습니다. (" + response.status + ")");
   }
   movies = await response.json();
-  render(movies);
+  applySearch();
+}
+
+// 제목 또는 감독으로 현재 목록을 걸러서 보여 준다
+function applySearch() {
+  const keyword = document.getElementById("keyword").value.trim();
+  if (keyword === "") {
+    render(movies);
+    return;
+  }
+
+  const found = movies.filter(function (movie) {
+    return movie.title.includes(keyword) || movie.director.includes(keyword);
+  });
+  render(found);
 }
 
 // 배열을 테이블에 출력
@@ -212,6 +226,8 @@ window.onload = function () {
   loadMovies().catch(function (error) {
     showMessage(error.message, true);
   });
+
+  document.getElementById("keyword").addEventListener("input", applySearch);
 
   document.getElementById("movieForm").addEventListener("submit", async function (event) {
     event.preventDefault();
