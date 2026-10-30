@@ -177,6 +177,31 @@ async function updateMovie(data) {
   await response.json();
 }
 
+// 확인 후에 서버에서 삭제
+async function deleteMovie(id) {
+  if (!confirm("삭제하시겠습니까?")) {
+    return;
+  }
+
+  try {
+    const response = await fetch(API_URL + "/" + id, {
+      method: "DELETE"
+    });
+    if (!response.ok) {
+      throw new Error("삭제에 실패했습니다. (" + response.status + ")");
+    }
+
+    if (String(editId) === String(id)) {
+      resetForm();
+    }
+
+    await loadMovies();
+    showMessage("삭제했습니다.", false);
+  } catch (error) {
+    showMessage(error.message, true);
+  }
+}
+
 function resetForm() {
   editId = null;
   document.getElementById("movieForm").reset();
