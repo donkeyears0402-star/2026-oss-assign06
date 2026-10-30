@@ -151,6 +151,19 @@ function startEdit(id) {
   document.getElementById("saveBtn").innerText = "수정 완료";
 }
 
+// 새 영화를 서버에 추가
+async function addMovie(data) {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    throw new Error("추가에 실패했습니다. (" + response.status + ")");
+  }
+  await response.json();
+}
+
 function resetForm() {
   editId = null;
   document.getElementById("movieForm").reset();
@@ -162,11 +175,24 @@ window.onload = function () {
     showMessage(error.message, true);
   });
 
-  document.getElementById("movieForm").addEventListener("submit", function (event) {
+  document.getElementById("movieForm").addEventListener("submit", async function (event) {
     event.preventDefault();
     const data = readForm();
     if (!validate(data)) {
       return;
+    }
+
+    if (editId !== null) {
+      return;
+    }
+
+    try {
+      await addMovie(data);
+      resetForm();
+      await loadMovies();
+      showMessage("영화를 추가했습니다.", false);
+    } catch (error) {
+      showMessage(error.message, true);
     }
   });
 };
