@@ -220,6 +220,7 @@ function resetForm() {
   editId = null;
   document.getElementById("movieForm").reset();
   document.getElementById("saveBtn").innerText = "저장";
+  document.getElementById("title").focus();
 }
 
 window.onload = function () {
