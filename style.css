@@ -93,6 +93,7 @@ tbody tr:hover {
 /* 성공, 실패 메시지 */
 #message {
   min-height: 1.4em;
+  margin: 0 0 12px;
   font-weight: bold;
 }
 
@@ -102,4 +103,20 @@ tbody tr:hover {
 
 #message.ok {
   color: #067647;
+}
+
+#cancelBtn,
+#clearBtn {
+  margin-left: 6px;
+  background-color: #6b7280;
+}
+
+#cancelBtn:hover,
+#clearBtn:hover {
+  background-color: #4b5563;
+}
+
+button:disabled {
+  background-color: #9aa6bd;
+  cursor: default;
 }
