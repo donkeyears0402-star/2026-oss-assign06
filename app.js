@@ -163,6 +163,7 @@ function startEdit(id) {
 
   editId = movie.id;
   document.getElementById("saveBtn").innerText = "수정 완료";
+  document.getElementById("cancelBtn").hidden = false;
 }
 
 // 새 영화를 서버에 추가
@@ -224,6 +225,7 @@ function resetForm() {
   editId = null;
   document.getElementById("movieForm").reset();
   document.getElementById("saveBtn").innerText = "저장";
+  document.getElementById("cancelBtn").hidden = true;
   document.getElementById("title").focus();
 }
 
@@ -233,6 +235,11 @@ window.onload = function () {
   });
 
   document.getElementById("keyword").addEventListener("input", applySearch);
+
+  document.getElementById("cancelBtn").addEventListener("click", function () {
+    resetForm();
+    showMessage("수정을 취소했습니다.", false);
+  });
 
   document.getElementById("movieForm").addEventListener("submit", async function (event) {
     event.preventDefault();
