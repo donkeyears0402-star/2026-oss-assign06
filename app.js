@@ -44,7 +44,8 @@ function render(list) {
     const tr = document.createElement("tr");
     const td = document.createElement("td");
     td.colSpan = 6;
-    td.innerText = "표시할 영화가 없습니다.";
+    const keyword = document.getElementById("keyword").value.trim();
+    td.innerText = keyword === "" ? "표시할 영화가 없습니다." : "검색 결과가 없습니다.";
     tr.appendChild(td);
     tbody.appendChild(tr);
     return;
