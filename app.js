@@ -237,6 +237,11 @@ window.onload = function () {
 
   document.getElementById("keyword").addEventListener("input", applySearch);
 
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    document.getElementById("keyword").value = "";
+    applySearch();
+  });
+
   document.getElementById("cancelBtn").addEventListener("click", function () {
     resetForm();
     showMessage("수정을 취소했습니다.", false);
