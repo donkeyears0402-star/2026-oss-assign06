@@ -4,6 +4,7 @@ const API_URL = "https://6ae6da4556b2ee1e543feb38.mockapi.io/api/v1/movies";
 // 화면에 그릴 영화 목록. 저장은 서버에서 한다.
 let movies = [];
 let editId = null; // 수정 중인 id. null이면 추가
+let saving = false; // 요청이 끝나기 전에는 또 저장하지 않음
 
 function showMessage(text, isError) {
   const el = document.getElementById("message");
@@ -250,9 +251,13 @@ window.onload = function () {
   document.getElementById("movieForm").addEventListener("submit", async function (event) {
     event.preventDefault();
     const data = readForm();
-    if (!validate(data)) {
+    if (!validate(data) || saving) {
       return;
     }
+
+    const saveBtn = document.getElementById("saveBtn");
+    saving = true;
+    saveBtn.disabled = true;
 
     try {
       if (editId === null) {
@@ -266,6 +271,9 @@ window.onload = function () {
       await loadMovies();
     } catch (error) {
       showMessage(error.message, true);
+    } finally {
+      saving = false;
+      saveBtn.disabled = false;
     }
   });
 };
