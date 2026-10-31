@@ -193,7 +193,11 @@ async function updateMovie(data) {
 
 // 확인 후에 서버에서 삭제
 async function deleteMovie(id) {
-  if (!confirm("삭제하시겠습니까?")) {
+  const movie = movies.find(function (m) {
+    return String(m.id) === String(id);
+  });
+  const title = movie ? movie.title : "이 영화";
+  if (!confirm('"' + title + '"을 삭제하시겠습니까?')) {
     return;
   }
 
